@@ -1,0 +1,51 @@
+sessions:
+  userbot:
+    api_id: ${TG_API_ID}
+    api_hash: ${TG_API_HASH}
+    phone: "+123456789"
+  bot:
+    token: ${BOT_TOKEN}
+
+self_forward:
+  enabled: true
+  target: -100666666666
+  strip_attribution: true
+  append_source: false
+  source_format: "\n\n📌 来源: {source_name}"
+  apply_modifications: false
+  album_wait_seconds: 2
+
+templates:
+  clean_ads:
+    replacements:
+      - regex: "(?i)join\\s+us\\s+at.*"
+        replace: ""
+      - regex: "https?://t\\.me/\\S+"
+        replace: "[链接已移除]"
+
+jobs:
+  - name: "加密新闻"
+    source: -100111111111
+    target: -100222222222
+    mode: userbot
+    filters:
+      whitelist: ["BTC", "ETH"]
+      blacklist: ["scam", "airdrop"]
+    use_template: clean_ads
+  - name: "开发动态"
+    source: -100333333333
+    target: -100444444444
+    mode: bot
+    modifications:
+      - regex: "v(\\d+)"
+        replace: "Version $1"
+
+protected_extractor:
+  enabled: false
+  max_file_size_mb: 100
+  temp_dir: /tmp/tg-extract
+  rate_limit: 5
+
+monitoring:
+  audit_channel: -100555555555
+  admin_id: 123456789

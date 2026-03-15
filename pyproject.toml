@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tg-forwarder"
+version = "0.1.0"
+description = "Telegram forwarding bot with Telethon"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "telethon>=1.36.0",
+  "pydantic>=2.0",
+  "PyYAML>=6.0",
+  "aiosqlite>=0.20.0",
+]
+
+[project.optional-dependencies]
+media = [
+  "pillow>=10.0.0",
+]
+
+[project.scripts]
+tg-forwarder = "tg_forwarder.__main__:main"
+
+[tool.setuptools]
+packages = [
+  "tg_forwarder",
+  "tg_forwarder.config",
+  "tg_forwarder.core",
+  "tg_forwarder.features",
+  "tg_forwarder.plugins",
+  "tg_forwarder.bot",
+]
+
+[tool.setuptools.package-data]
+tg_forwarder = ["py.typed"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
